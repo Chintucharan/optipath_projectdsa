@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>OptiPath Tools - Shortest Path Finder</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>OptiPath Tools</h1>
+        <p class="subtitle">Find the shortest path in your graph easily</p>
+
+        <form method="POST" class="form-box">
+            <label for="graph_input">Graph Input (JSON Format):</label>
+            <textarea id="graph_input" name="graph_input" rows="10" required>{% raw %}
+{
+  "A": [["B", 1], ["C", 4]],
+  "B": [["C", 2], ["D", 5]],
+  "C": [["D", 1]],
+  "D": []
+}
+{% endraw %}</textarea>
+
+            <div class="input-row">
+                <div class="input-group">
+                    <label for="start">Start Node:</label>
+                    <input id="start" name="start" type="text" required placeholder="e.g. A" />
+                </div>
+                <div class="input-group">
+                    <label for="end">End Node:</label>
+                    <input id="end" name="end" type="text" required placeholder="e.g. D" />
+                </div>
+            </div>
+
+            <button type="submit" class="btn">Find Shortest Path</button>
+        </form>
+
+        {% if path %}
+        <div class="result">
+            <h2>Results</h2>
+            <p><strong>Shortest Path:</strong> {{ path }}</p>
+            <p><strong>Total Cost:</strong> {{ cost }}</p>
+            <img src="{{ url_for('static', filename='path.png') }}?{{ timestamp }}" alt="Graph Visualization" class="graph-img" />
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
